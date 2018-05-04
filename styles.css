@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+.game-screen {
+    position: relative;
+    height: 900px;
+    width: 1500px;
+    margin: auto;
+    /* background-color: black; */
+    display: grid;
+    grid-template-columns: repeat(30, 1fr);
+    grid-template-rows: repeat(18, 1fr);
+}
+
+.menu-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* CHARACTER CREATION SECTION */
+
+.char-create {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.stats-list {
+    list-style-type: none;
+
+}
+
+.stats-list span {
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+}
+.stats-list span > * {
+    width: 150px;
+    text-align: center;
+}
+
+.stats-list span > p {
+    font-weight: bold;
+    cursor: pointer;
+}
+
