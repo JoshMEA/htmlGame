@@ -10,29 +10,29 @@ function Spell(name, type, power) {
     spells.push(this);
 }
 
-function Weapon(name, type, dmgType, elem, atk, weight, value) {
+function Weapon(name, type, dmgType, elem, attack, weight, value) {
     this.name = name;
     this.type = type;
     this.dmgType = dmgType;
     this.elem = elem;
-    this.atk = atk;
+    this.attack = attack;
     this.weight = weight;
     this.value = value;
     weapons.push(this);
 }
-
-let player = {
-    name : 'Josh',
-    HP : 100,
-    MP : 100,
-    amrVal : 7,
-    type : '',
+ 
+let charStats = {
     level : 1,
-    atk : 40,
-    def : 25,
-    mPow : 35,
-    mDef : 10
-}
+    skillPoints : 50,
+    name : '',
+    HP : 100,
+    MP : 50,
+    attack : 0,
+    defense : 0,
+    magicPower : 0,
+    magicDefense : 0,
+    speed : 0
+};
 
 let enemy = {
     name : 'Goblin',
@@ -41,10 +41,10 @@ let enemy = {
     amrVal : 10, 
     type : 'Dark',
     level : 1,
-    atk : 20,
-    def : 15,
-    mPow : 5,
-    mDef : 25
+    attack : 20,
+    defense : 15,
+    magicPower : 5,
+    magicDefense : 25
 }
 
 // attack function 
@@ -56,8 +56,8 @@ function attack(target, weapon) {
         // weapon
         if (weapon.dmgType === 'phys') {
 
-            let atkPow = player.atk + weapon.atk;
-            let defPow = target.def;
+            let atkPow = charStats.attack + weapon.attack;
+            let defPow = target.defense;
             let dmg = (atkPow - defPow) / enemy.amrVal;
             critHit >= 0.75 ? dmg = dmg*2 : false;
             enemy.HP = enemy.HP - dmg;
