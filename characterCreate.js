@@ -5,7 +5,21 @@ const attr = statsList.querySelectorAll('span');
 const skillPoints = charCreate.querySelector('.skill-points');
 const subBtn = charCreate.querySelectorAll('[data-sub]');
 const addBtn = charCreate.querySelectorAll('[data-add]');
+const attrVal = statsList.querySelectorAll('[data-attrVal]');
+const attrName = statsList.querySelectorAll('[data-attrName');
 const createBtn = charCreate.querySelector('button');
+
+window.addEventListener('load',() => {
+    skillPoints.textContent = charStats.skillPoints;
+
+    for (let i = 0; i < attrName.length; i++) {
+        let attr = attrName[i].dataset;
+        attrVal.textContent = charStats.attr;
+        console.log();
+
+    }
+});
+
 let charStats = {
     level : 1,
     skillPoints : 50,
