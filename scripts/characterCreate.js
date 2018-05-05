@@ -85,3 +85,6 @@ $createBtn.addEventListener('click', () => {
 });
 
 // Notes
+    // this creation screen doubles as the level up screen. When it has been used to create the character in the beginning,
+    // the text in $createBtn will change to 'Done' and the name input field will disappear
+    // all functionality with adding and subtracting from the attributes will remain the same 
