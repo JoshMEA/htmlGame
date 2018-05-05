@@ -28,8 +28,8 @@ body {
 
 .object {
     font-size: 26px;
-    text-shadow: 2px 2px 5px black;
-    color: white;
+    text-shadow: 4px 4px 8px black;
+    color: #dfdfdf;
     font-weight: bold;
     text-align: center;
     position: absolute;

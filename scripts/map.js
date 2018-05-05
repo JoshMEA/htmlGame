@@ -22,7 +22,15 @@ const scenes = [
                     height : 121 },            
                 type : 'container',
                 name : 'chair'
-            }
+            },
+            {   props : {
+                startX : 370,
+                startY : 51,
+                width : 285,
+                height : 120 },            
+            type : 'container',
+            name : 'lounge'
+        }
         ]
     },
     {},
@@ -94,6 +102,7 @@ scenes[currentScene].objects.forEach(obj => {
 $objects.forEach(obj => obj.addEventListener('mouseover', displayPopup));
 
 function displayPopup() {
+    console.time();
     let index = [...$objects].indexOf(this);
     let type = $objects[index].dataset.type;// gets the type of object 
     let name = $objects[index].dataset.name;// gets name of object
@@ -114,12 +123,7 @@ function displayPopup() {
     $objects[index].classList.add('hover-object'); // animates the text above object
 
     $objects[index].addEventListener('mouseleave', () => this.classList.remove('hover-object'));
-
-
-
-
-    console.log(type, index);
-    
+    console.timeEnd();
 }
 
 
