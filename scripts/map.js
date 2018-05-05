@@ -4,21 +4,21 @@ const $gameScreen = document.querySelector('.game-screen');
 let currentScene = 0;
 const scenes = [
     {
-        imgSrc : 'images/image.jpg',
-        objects : [
-            {   props : {
-                startX : 396,
-                startY : 229,
-                width : 182,
-                height : 86 },            
-                type : 'table'
+        imgSrc : 'images/image.jpg', // scene picture
+        objects : [    // array of all interactable objects in that scene
+            {   props : { // absolute positioning properties
+                    startX : 396,   //topLeft xCoord
+                    startY : 229,   // topLeft yCoord
+                    width : 182,    // width
+                    height : 86 },  // height       
+                type : 'furniture'// object type (person, enemy, container, waypoint etc.)
             },
             {   props : {
-                startX : 687,
-                startY : 236,
-                width : 104,
-                height : 121 },            
-                type : 'chair'
+                    startX : 687,
+                    startY : 236,
+                    width : 104,
+                    height : 121 },            
+                type : 'furniture'
             }
         ]
     },
@@ -31,9 +31,10 @@ window.addEventListener('load', () => {
     // $backgroundImg.style.backgroundImage = `url(${scenes[currentScene].imgSrc})`;
 });
 
-// make function to get the mouse coordinates so I know where to place interactable objects
-let clickCount = 0;
 
+//This block includes the function to get the dimensional properties of an object////////////////////////////////
+//You can comment it out when not in use, it is not needed for actually running the game, just used in the build phase
+let clickCount = 0;
 let elemDims = {
     start : {
         x : '',
@@ -42,16 +43,12 @@ let elemDims = {
     width : '',
     height : ''
 };
-
 let clickCoords = [];
 // clickCoords[0] first click top left
 // clickCoords[1] second click top right
 // clickCoords[2] third click bottom right
 // clickCoords[3] fourth click bottom left
-
-
 $backgroundImg.addEventListener('click', getCoords);
-
 function getCoords(e) {
     // e.preventDefault();
     if (clickCount < 3) { // runs first block up until 4 clicks on screen
@@ -72,37 +69,22 @@ function getCoords(e) {
     }
 }
 
-// function to push the interactable elements to DOM
+// pushes interactable objects to DOM
 scenes[currentScene].objects.forEach(obj => {
     let index = [...scenes[currentScene].objects].indexOf(obj);
     let node = document.createElement('article');
     $gameScreen.appendChild(node);
 
-    let objects = $gameScreen.querySelectorAll('article');
+    let $objects = $gameScreen.querySelectorAll('article'); // gets all interactable elements
 
-    objects[index].classList.add('object');
-    objects[index].setAttribute('data-object', scenes[currentScene].objects[index].type);
-    objects[index].style.top = `${scenes[currentScene].objects[index].props['startY']}px`;
-    objects[index].style.left = `${scenes[currentScene].objects[index].props['startX']}px`;
-    objects[index].style.height = `${scenes[currentScene].objects[index].props['height']}px`;
-    objects[index].style.width = `${scenes[currentScene].objects[index].props['width']}px`;
-
-    console.log(objects);
-
-
+    $objects[index].classList.add('object'); // applies css class to object
+    $objects[index].setAttribute('data-object', scenes[currentScene].objects[index].type); //sets object type
+    $objects[index].style.top = `${scenes[currentScene].objects[index].props['startY']}px`; // sets start x, y coords
+    $objects[index].style.left = `${scenes[currentScene].objects[index].props['startX']}px`;//
+    $objects[index].style.height = `${scenes[currentScene].objects[index].props['height']}px`;//sets height of object
+    $objects[index].style.width = `${scenes[currentScene].objects[index].props['width']}px`; //sets width of object
+    console.log($objects);
 });
-
-function renderObjects() {
-
-// var node = document.createElement("LI");                 // Create a <li> node
-// var textnode = document.createTextNode("Water");         // Create a text node
-// node.appendChild(textnode);                              // Append the text to <li>
-// document.getElementById("myList").appendChild(node);     // Append <li> to <ul> with id="myList"
-
-}
-
-
-
 
 // NOTES
 
