@@ -20,10 +20,23 @@ body {
     grid-template-rows: repeat(18, 1fr); */
 }
 
+
+/* MAP STUFF*/
 .gameImg {
     width: 100%;
 }
 
+.object {
+    position: absolute !important;
+    border: 1px solid black;
+    /* z-index: 10; */
+}
+
+
+
+
+
+/* MENUS SCREENS */
 .menu-container {
     display: none;
     position: absolute;
@@ -32,13 +45,7 @@ body {
     width: 100%;
 }
 
-
-
-
-/* MENUS SCREENS */
-
 /* CHARACTER CREATION / LEVEL UP SECTION */
-
 .char-create {
     /* display: none; */
     position: absolute;
