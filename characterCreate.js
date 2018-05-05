@@ -23,21 +23,28 @@ let charStats = {
     speed : 0
 };
 
-window.addEventListener('load',() => {
-    $skillPoints.textContent = charStats['skillPoints'];
-
-    for (let i = 0; i < $attrName.length; i++) {
-        let attr = $attrName[i].dataset.attrname;
-        $attrVal[i].textContent = charStats[attr];
-        console.log(charStats.attr);
-
-    }
-
-});
-
+window.addEventListener('load', loadLevelScreen); // run the level increase function when window loads
 
 $addBtn.forEach(btn => btn.addEventListener('click', addAttribute));
 $subBtn.forEach(btn => btn.addEventListener('click', subAttribute));
+
+function loadLevelScreen() {
+    $skillPoints.textContent = charStats['skillPoints']; // populates the DOM element with the amount of skill points in charStats skillPoints bank
+
+    // forEach method is 3 times faster than the for loop, however doesn't populate the DOM elements with the required data. Still works though
+       
+        // $attrVal.forEach(val => {
+        //     let index = [...$attrVal].indexOf(val);
+        //     let attr = $attrName[index].dataset.attrname;
+    
+        //     $attrVal[index] = charStats[attr];
+        // });
+    
+    for (let i = 0; i < $attrName.length; i++) { // sets all the DOM elements for each attribute to that of charStats object
+        let attr = $attrName[i].dataset.attrname;
+        $attrVal[i].textContent = charStats[attr];
+    }
+}
 
 function addAttribute() {
     const index = [...$addBtn].indexOf(this);
@@ -50,7 +57,6 @@ function addAttribute() {
         const currentAttributeVal = charStats[currentAttribute]; //gets the current attributes value
         $attrVal[index].textContent = currentAttributeVal; // updates the amount of points for that attribute in the DOM
         console.log(currentAttribute, charStats[currentAttribute]);
-
     }
 }
 
@@ -70,9 +76,12 @@ function subAttribute() {
 }
 
 $createBtn.addEventListener('click', () => {
-    charStats.name = charCreate.querySelector('input').value;
-    console.log(charStats.name);
+    const nameInput = $charCreate.querySelector('input');
+    if (nameInput.value === '') {
+        console.log('no name motherfucker!!!');
+        return false;
+    }
+    charStats['name'] = nameInput.value;
 });
 
 // Notes
-    // when skill points have been assigned to attributes, push into charStats variable
