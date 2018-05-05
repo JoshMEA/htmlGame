@@ -15,12 +15,17 @@ body {
     width: 1500px;
     margin: auto;
     /* background-color: black; */
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(30, 1fr);
-    grid-template-rows: repeat(18, 1fr);
+    grid-template-rows: repeat(18, 1fr); */
+}
+
+.gameImg {
+    width: 100%;
 }
 
 .menu-container {
+    display: none;
     position: absolute;
     top: 0;
     height: 100%;
@@ -28,10 +33,14 @@ body {
 }
 
 
+
+
+/* MENUS SCREENS */
+
 /* CHARACTER CREATION / LEVEL UP SECTION */
 
 .char-create {
-    display: none;
+    /* display: none; */
     position: absolute;
     top: 50%;
     left: 50%;
