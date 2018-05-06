@@ -20,23 +20,29 @@ function Weapon(name, type, dmgType, elem, attack, weight, value) {
     this.value = value;
     weapons.push(this);
 }
- 
+
+// these stats and calculations are good for a basic enemy at the start of the game
+// 
+
+
 let charStats = {
     level : 1,
-    skillPoints : 50,
+    expNeeded : 100,
+    currentExp : 0,
+    skillPoints : 0,
     name : '',
     HP : 100,
     MP : 50,
-    attack : 0,
-    defense : 0,
-    magicPower : 0,
-    magicDefense : 0,
-    speed : 0
+    attack : 15,
+    defense : 10,
+    magicPower : 10,
+    magicDefense : 10,
+    speed : 5
 };
 
 let enemy = {
     name : 'Goblin',
-    HP : 50,
+    HP : 35,
     MP : 10,
     amrVal : 10, 
     type : 'Dark',
@@ -86,4 +92,10 @@ for (let i = 0; i < weapons.length; i++) {
     }
 }
 
-attack(enemy, longSword);
+
+
+
+
+
+// NOTES
+    // 

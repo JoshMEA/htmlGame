@@ -1,6 +1,8 @@
 
-const $backgroundImg = document.querySelector('.gameImg');
+
 const $gameScreen = document.querySelector('.game-screen');
+const $scene = $gameScreen.querySelector('.scene');
+const $backgroundImg = $gameScreen.querySelector('.scene-img');
 let $objects;
 let currentScene = 0;
 const scenes = [
@@ -9,29 +11,30 @@ const scenes = [
         objects : [    // array of all interactable objects in that scene
             {   props : { // absolute positioning properties
                     startX : 396,   //topLeft xCoord
-                    startY : 229,   // topLeft yCoord
-                    width : 182,    // width
-                    height : 86 },  // height       
+                    startY : 176,   // topLeft yCoord
+                    width : 178,    // width
+                    height : 80 },  // height       
                 type : 'container',// object type (person, enemy, container, waypoint etc.)
                 name : 'table'
             },
             {   props : {
                     startX : 687,
-                    startY : 236,
+                    startY : 181,
                     width : 104,
-                    height : 121 },            
+                    height : 90 },            
                 type : 'container',
                 name : 'chair'
             },
             {   props : {
                 startX : 370,
-                startY : 51,
+                startY : 30,
                 width : 285,
-                height : 120 },            
+                height : 100 },            
             type : 'container',
             name : 'lounge'
-        }
-        ]
+            }
+        ],
+        enemies : []// array of enemies, each one is defined elsewhere
     },
     {},
     {}
@@ -84,13 +87,13 @@ window.addEventListener('load', () => {
 scenes[currentScene].objects.forEach(obj => {
     let index = [...scenes[currentScene].objects].indexOf(obj);
     let node = document.createElement('article');
-    $gameScreen.appendChild(node);
+    $scene.appendChild(node);
 
-    $objects = $gameScreen.querySelectorAll('article'); // sets variable for all interactable elements
+    $objects = $scene.querySelectorAll('article'); // sets variable for all interactable elements
 
     $objects[index].classList.add('object'); // applies css class to object
     $objects[index].setAttribute('data-type', scenes[currentScene].objects[index].type); //sets object type
-    $objects[index].setAttribute('data-name', scenes[currentScene].objects[index].name); //sets object type
+    $objects[index].setAttribute('data-name', scenes[currentScene].objects[index].name); //sets object name
 
     $objects[index].style.top = `${scenes[currentScene].objects[index].props['startY']}px`; // sets start x, y coords
     $objects[index].style.left = `${scenes[currentScene].objects[index].props['startX']}px`;//
@@ -120,9 +123,15 @@ function displayPopup() {
     }
 
     $objects[index].textContent = output; // sets output to the required text
-    $objects[index].classList.add('hover-object'); // animates the text above object
 
-    $objects[index].addEventListener('mouseleave', () => this.classList.remove('hover-object'));
+    if ($objects[index].offsetTop < 170) { // if the object is close to the top of the screen
+        $objects[index].classList.add('hover-object-under'); // animates the text under object
+        $objects[index].addEventListener('mouseleave', () => this.classList.remove('hover-object-under'));
+    } else { // else if the object is not near top of screen
+        $objects[index].classList.add('hover-object-above'); // animates the text above object
+        $objects[index].addEventListener('mouseleave', () => this.classList.remove('hover-object-above'));
+    }
+
     console.timeEnd();
 }
 

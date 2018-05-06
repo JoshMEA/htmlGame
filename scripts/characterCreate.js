@@ -80,8 +80,9 @@ $createBtn.addEventListener('click', () => {
     if (nameInput.value === '') {
         console.log('no name motherfucker!!!');
         return false;
+    } else {
+        charStats['name'] = nameInput.value;
     }
-    charStats['name'] = nameInput.value;
 });
 
 // Notes
