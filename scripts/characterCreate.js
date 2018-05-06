@@ -12,10 +12,13 @@ const $createBtn = $charCreate.querySelector('button');
 
 let charStats = {
     level : 1,
-    skillPoints : 10,
+    expNeeded : 100,
+    currentExp : 0,
+    skillPoints : 0,
     name : '',
     HP : 100,
-    MP : 50,
+    MP : 100,
+    armVal : 0,
     attack : 0,
     defense : 0,
     magicPower : 0,

@@ -26,13 +26,14 @@ function Weapon(name, type, dmgType, elem, attack, weight, value) {
 
 
 let charStats = {
-    level : 1,
-    expNeeded : 100,
+    level : 10,
+    expNeeded : 10,
     currentExp : 0,
     skillPoints : 0,
     name : '',
     HP : 100,
     MP : 50,
+    armVal : 0,
     attack : 15,
     defense : 10,
     magicPower : 10,
