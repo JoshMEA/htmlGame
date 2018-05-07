@@ -1,20 +1,18 @@
 
+// let spells = [];
+
+// function Spell(name, type, power) {
+//     this.name = name;
+//     this.type = type;
+//     this.power = power;
+//     spells.push(this);
+// }
+
 let weapons = [];
-
-let spells = [];
-
-function Spell(name, type, power) {
+function Weapon(name, type, AP, attack, weight, value) {
     this.name = name;
     this.type = type;
-    this.power = power;
-    spells.push(this);
-}
-
-function Weapon(name, type, dmgType, elem, attack, weight, value) {
-    this.name = name;
-    this.type = type;
-    this.dmgType = dmgType;
-    this.elem = elem;
+    this.AP = AP;
     this.attack = attack;
     this.weight = weight;
     this.value = value;
@@ -27,7 +25,7 @@ function Weapon(name, type, dmgType, elem, attack, weight, value) {
 
 let charStats = {
     level : 10,
-    expNeeded : 10,
+    expNeeded : 100,
     currentExp : 0,
     skillPoints : 0,
     name : '',
@@ -46,12 +44,12 @@ let enemy = {
     HP : 35,
     MP : 10,
     amrVal : 10, 
-    type : 'Dark',
     level : 1,
     attack : 20,
     defense : 15,
     magicPower : 5,
-    magicDefense : 25
+    magicDefense : 25,
+    speed : 5
 }
 
 // attack function 
@@ -61,37 +59,25 @@ function attack(target, weapon) {
     console.log(critHit);
     //find what thing is being used to attack
         // weapon
-        if (weapon.dmgType === 'phys') {
-
-            let atkPow = charStats.attack + weapon.attack;
-            let defPow = target.defense;
-            let dmg = (atkPow - defPow) / enemy.amrVal;
-            critHit >= 0.75 ? dmg = dmg*2 : false;
-            enemy.HP = enemy.HP - dmg;
-            console.log(enemy.HP);
-
-        } else if (weapon.dmgType === 'mgc') {
-
-        }
-        
-        if(enemy.HP <= 0) {
-            console.log(`${enemy.name} is defeated!!!!`);
-        }
-}
-
-
-
-var longSword = new Weapon('Longsword', 'Sword', 'phys', '', 50, 20, 300);
-var fireStaff = new Weapon('Firestaff', 'Staff', 'phys', 'fire', 10, 5, 700);
-
-var fireBlast = new Spell('Fireblast', 'Fire', 150);
-
-for (let i = 0; i < weapons.length; i++) {
+        let atkPow = charStats.attack + weapon.attack;
+        let defPow = target.defense;
+        let dmg = (atkPow - defPow) / target.amrVal;
+        critHit >= 0.75 ? dmg = dmg*2 : false;
+        target.HP = target.HP - dmg;
+        console.log(target.HP);
     
-    if (weapons[i].elem === 'fire') {
-        weapons[i].spells = [fireBlast];
-    }
+        if(target.HP <= 0) {
+            console.log(`${target.name} is defeated!!!!`);
+        }
 }
+
+
+
+var longSword = new Weapon('Longsword', 'Sword', 10, 50, 20, 300);
+// var fireStaff = new Weapon('Firestaff', 'Staff', 1, 10, 5, 700);
+
+// var fireBlast = new Spell('Fireblast', 'Fire', 150);
+
 
 
 
