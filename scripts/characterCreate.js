@@ -1,3 +1,4 @@
+
 const $menuCont = document.querySelector('.menu-container');
 const $charCreate = $menuCont.querySelector('.char-create');
 const $statsList = $charCreate.querySelector('.stats-list');
@@ -16,8 +17,10 @@ let charStats = {
     currentExp : 0,
     skillPoints : 0,
     name : '',
-    HP : 100,
-    MP : 100,
+    maxHP : 100,
+    HP : maxHP,
+    maxMP : 100,
+    MP : maxMP,
     armVal : 0,
     attack : 0,
     defense : 0,

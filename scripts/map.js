@@ -13,8 +13,8 @@ const scenes = [
                     startX : 396,   //topLeft xCoord
                     startY : 176,   // topLeft yCoord
                     width : 178,    // width
-                    height : 80 },  // height       
-                type : 'container',// object type (person, enemy, container, waypoint etc.)
+                    height : 80 },  // height
+                type : 'enemy',// object type (person, enemy, container, waypoint etc.)
                 name : 'table'
             },
             {   props : {
@@ -34,7 +34,7 @@ const scenes = [
             name : 'lounge'
             }
         ],
-        enemies : []// array of enemies, each one is defined elsewhere
+        enemies : [/* goblin, goblinOverlord, otherGoblin */]// array of enemies, each one is defined elsewhere
     },
     {},
     {}
