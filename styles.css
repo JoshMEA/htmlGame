@@ -73,16 +73,34 @@ body {
 .fight-cont {
     height: 60%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+
+.enemy-cont {
+    height: 200px;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
 .enemy {
   /* class for enemy which gets rendered on screen */
+    margin: auto;
+    height: 100%;
+    width: 150px;
+    border: 1px solid black;
 }
 
 .action-cont {
     width: 50%;
     height: 40%;
     margin: auto;
+}
+
+.selected-enemy {
+    border: 5px solid green;
 }
 
 

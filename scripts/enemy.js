@@ -22,8 +22,7 @@ let Enemy = function(name, maxHP, maxMP, armVal, attack, defense, magicPower, ma
     this.magicPower = magicPower + Math.floor(magicPower * (this.level * 0.05));
     this.magicDefense = magicDefense + Math.floor(magicDefense * (this.level * 0.05));
     this.speed = speed + Math.floor(speed * (this.level * 0.05));
-    this.exp =  Math.floor(Math.random() * (this.level + 10)) + 1 
-            + Math.floor(this.level * ((this.level * (this.maxHP / 6 )) / 2));
+    this.exp =  Math.floor((randomNum(1, this.level + 10)) + (this.level / ((this.level / (this.maxHP * 6 )) * 2)));
 };
 
 
@@ -35,7 +34,7 @@ function levelGen() {
 
 let charStats = {
     level : 1,
-    expNeeded : 50,
+    expNeeded : 1000,
     currentExp : 0,
     skillPoints : 0,
     name : '',
@@ -102,6 +101,14 @@ var shittyGoblin = new Enemy ('Shitty Goblin', 60, 0, 30, 10, 15, 5, 5, 5);
 let enemies = [randomGoblin, otherGoblin, goblinOverlord, shittyGoblin, goblin, niceGoblin];
 
 const $fightCont = document.querySelector('.fight-cont');
+const $enemyCont = $fightCont.querySelector('.enemy-cont');
+const $attackBtn = document.querySelector('.attack-btn');
+let $enemy;
+let $attackTarget;
+let weakEnemy = enemies.filter(weakEnem);
+let medEnemy = enemies.filter(medEnem);
+let strongEnemy = enemies.filter(strongEnem);
+
 //  FUNCTION TO APPEND AMOUNT OF ENEMIES TO BATTLE SCREEN
                     // sort enemies into weak, medium and strong arrays
                     function weakEnem(enemy) {
@@ -114,11 +121,9 @@ const $fightCont = document.querySelector('.fight-cont');
                         return enemy.HP > 65;
                     }
 
-                    let weakEnemy = enemies.filter(weakEnem);
-                    let medEnemy = enemies.filter(medEnem);
-                    let strongEnemy = enemies.filter(strongEnem);
 
 
+                    // ////////// generates random number of enemies and renders them to the DOM
                     function enemyGen() {
                         // gen random number of enemies
                         let numEnemies = randomNum(1, 3);
@@ -131,9 +136,9 @@ const $fightCont = document.querySelector('.fight-cont');
                                 output += `<article></article>`;
                             }
                         //     
-                        $fightCont.innerHTML = output;
+                        $enemyCont.innerHTML = output;
                         // set class for all enemies
-                        let $enemy = $fightCont.querySelectorAll('article');
+                        $enemy = $fightCont.querySelectorAll('article');
                         // 
                         $enemy.forEach(enemy =>enemy.classList.add('enemy'));
                         // find what enemies will appear
@@ -142,8 +147,7 @@ const $fightCont = document.querySelector('.fight-cont');
                             //randomly selects an enemy from strong, medium and weak strength enemies
                             enemyBank = weakEnemy.concat(medEnemy.concat(strongEnemy)); 
                             enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
-                            console.log(enemySelect);
-                            renderEnemy($enemy, enemySelect)
+                            renderEnemy(enemySelect);
                         } else if (numEnemies === 2) {
                             enemySelect = [];
                             //randomly selects an enemy from strong and weak strength enemies
@@ -152,8 +156,7 @@ const $fightCont = document.querySelector('.fight-cont');
                             //randomly selects an enemy from medium and weak strength enemies
                             enemyBank = weakEnemy.concat(medEnemy);
                             enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
-                            console.log(enemySelect);
-                            renderEnemy($enemy, enemySelect)
+                            renderEnemy(enemySelect);
 
                         } else {
                             enemySelect = [];
@@ -164,33 +167,50 @@ const $fightCont = document.querySelector('.fight-cont');
                             run(() => {
                                 enemySelect.push(weakEnemy[randomNum(1, weakEnemy.length-1)]);
                             }, 2);
-                            renderEnemy($enemy, enemySelect)
+                            renderEnemy(enemySelect);
                         }
                     }
 
-                    function renderEnemy(target, array) {
-                        target.forEach(enemy => {
-                            let index = [...target].indexOf(enemy);
-                            enemy.setAttribute('data-name',array[index].name);
-                            enemy.setAttribute('data-HP',array[index].HP);
+                    // Puts the enemy info into the DOM
+                    //target refers to $enemy, enemySelect
+                    function renderEnemy(array = enemySelect) {
+                        var $enemy = $fightCont.querySelectorAll('article');
+
+                        $enemy.forEach(enemy => {
+                            let index = [...$enemy].indexOf(enemy);
+                            enemy.setAttribute('data-name', array[index].name);
+                            enemy.setAttribute('data-HP', array[index].HP);
+                        });
+
+                        $enemy.forEach(enemy => enemy.addEventListener('click', enemySelect));
+                    }
+
+                    function enemySelect() {
+                        // clears any previously selected enemy
+                        $enemy.forEach(enemy => enemy.classList.contains('selected-enemy') ?
+                                                    enemy.classList.remove('selected-enemy') : 
+                                                        false);
+                        
+                        let index = [...$enemy].indexOf(this);
+                        $enemy[index].classList.add('selected-enemy');
+
+                        $attackTarget = $enemyCont.querySelector('.selected-enemy');
+                        let health = $attackTarget.dataset.hp;
+                        console.log($attackTarget, health);
+
+                        $attackBtn.addEventListener('click', () => {
+                            // console.log($attackTarget);
+
+                            $attackTarget.setAttribute('data-hp', health - 10);
+                            if (health <= 0) {
+                                console.log(`${$attackTarget.dataset.name} has been defeated!!!!!!`);
+                                $attackTarget.parentNode.removeChild($attackTarget);
+                                console.log($attackTarget);
+                                // add experience to charStats exp
+                            }                                
                         });
                     }
 
-                    // function renderEnemy(target, output) {
-                    //     target.forEach(enemy => {
-                    //         index = [...target].indexOf(enemy);
-                    //         enemy.setAttribute('data-name', output.name);
-                    //         enemy.setAttribute('data-HP', output.HP);
-                    //         enemy.setAttribute('data-name', output.name);
-                            
-                    //     });
-                    // }
-
-                    //// NOTES need to work on load enemy function and calling it in enemyGen
-                    // its starting to work, but i need to tidy it up. It pushes all of the same thing to the DOM
-
-
-
-                    
-    
-
+                //  NOTES 
+                //  WORK ON ATTACK BTN FUNCTION. works fine for fighting the first enemy, but after that it runs the if statement
+                    // even if that enemy still has health.
