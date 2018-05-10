@@ -3,6 +3,12 @@ function randomNum(min, max) {
     return Math.floor(Math.random() * max) + min;
 }
 
+function run(_, amntTimes) {
+    for (i = 0; i < amntTimes; i++) {
+        _();
+    }
+}
+
 let Enemy = function(name, maxHP, maxMP, armVal, attack, defense, magicPower, magicDefense, speed) {
     this.level = levelGen();
     this.name = name;
@@ -113,39 +119,77 @@ const $fightCont = document.querySelector('.fight-cont');
                     let strongEnemy = enemies.filter(strongEnem);
 
 
-///////////////////////////////////// IM A BIT BAKED, CODE REVIEW TOMORROW 10/5/18 TO MAKE SURE IT'S ALL GOOD
                     function enemyGen() {
                         // gen random number of enemies
-                        let numEnemies = randomNum(1, 4);
+                        let numEnemies = randomNum(1, 3);
                         // pushes enemy container elements to DOM
+                        let enemyBank = []; // will have a list of enemies to randomly select from
+                        let enemySelect = []; // the randomly selected enemies go here
                         let output = '';
+
                         for (let i = 0; i < numEnemies; i++) {
                                 output += `<article></article>`;
                             }
+                        //     
                         $fightCont.innerHTML = output;
                         // set class for all enemies
-                        let enemy = $fightCont.querySelectorAll('article');
-                        // console.log(enemy);
-
-                        enemy.forEach(enemy =>enemy.classList.add('enemy'));
+                        let $enemy = $fightCont.querySelectorAll('article');
+                        // 
+                        $enemy.forEach(enemy =>enemy.classList.add('enemy'));
                         // find what enemies will appear
-                        let enemySelect = [];
                         if (numEnemies === 1) {
-                            let index = numEnemies;
-                            
-                            enemySelect = weakEnemy.concat(medEnemy.concat(strongEnemy));
-                            
+                            enemySelect = [];
+                            //randomly selects an enemy from strong, medium and weak strength enemies
+                            enemyBank = weakEnemy.concat(medEnemy.concat(strongEnemy)); 
+                            enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
                             console.log(enemySelect);
+                            renderEnemy($enemy, enemySelect)
                         } else if (numEnemies === 2) {
-
-                        } else if (numEnemies === 3) {
+                            enemySelect = [];
+                            //randomly selects an enemy from strong and weak strength enemies
+                            enemyBank = weakEnemy.concat(strongEnemy);
+                            enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
+                            //randomly selects an enemy from medium and weak strength enemies
+                            enemyBank = weakEnemy.concat(medEnemy);
+                            enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
+                            console.log(enemySelect);
+                            renderEnemy($enemy, enemySelect)
 
                         } else {
-
+                            enemySelect = [];
+                            //randomly selects an enemy from strong, medium and weak strength enemies
+                            enemyBank = weakEnemy.concat(medEnemy.concat(strongEnemy));
+                            enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
+                            //pushes 2 random enemies from weakEnemy to enemySelect
+                            run(() => {
+                                enemySelect.push(weakEnemy[randomNum(1, weakEnemy.length-1)]);
+                            }, 2);
+                            renderEnemy($enemy, enemySelect)
                         }
-
-
                     }
+
+                    function renderEnemy(target, array) {
+                        target.forEach(enemy => {
+                            let index = [...target].indexOf(enemy);
+                            enemy.setAttribute('data-name',array[index].name);
+                            enemy.setAttribute('data-HP',array[index].HP);
+                        });
+                    }
+
+                    // function renderEnemy(target, output) {
+                    //     target.forEach(enemy => {
+                    //         index = [...target].indexOf(enemy);
+                    //         enemy.setAttribute('data-name', output.name);
+                    //         enemy.setAttribute('data-HP', output.HP);
+                    //         enemy.setAttribute('data-name', output.name);
+                            
+                    //     });
+                    // }
+
+                    //// NOTES need to work on load enemy function and calling it in enemyGen
+                    // its starting to work, but i need to tidy it up. It pushes all of the same thing to the DOM
+
+
 
                     
     
