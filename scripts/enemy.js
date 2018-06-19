@@ -105,28 +105,17 @@ const $enemyCont = $fightCont.querySelector('.enemy-cont');
 const $attackBtn = document.querySelector('.attack-btn');
 let $enemy;
 let $attackTarget;
-let weakEnemy = enemies.filter(weakEnem);
-let medEnemy = enemies.filter(medEnem);
-let strongEnemy = enemies.filter(strongEnem);
+// sort enemies into weak, medium and strong arrays
+const weakEnemy = enemies.filter(enemy => enemy.HP < 30);
+const medEnemy = enemies.filter(enemy => enemy.HP >= 30 && enemy.HP <= 65);
+const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
 
 //  FUNCTION TO APPEND AMOUNT OF ENEMIES TO BATTLE SCREEN
-                    // sort enemies into weak, medium and strong arrays
-                    function weakEnem(enemy) {
-                        return enemy.HP < 30;
-                    }
-                    function medEnem(enemy) {
-                        return enemy.HP >= 30 && enemy.HP <= 65;
-                    }
-                    function strongEnem(enemy) {
-                        return enemy.HP > 65;
-                    }
-
-
-
                     // ////////// generates random number of enemies and renders them to the DOM
                     function enemyGen() {
                         // gen random number of enemies
-                        let numEnemies = randomNum(1, 3);
+                        // let numEnemies = randomNum(1, 3);
+                        let numEnemies = 2;
                         // pushes enemy container elements to DOM
                         let enemyBank = []; // will have a list of enemies to randomly select from
                         let enemySelect = []; // the randomly selected enemies go here
@@ -157,7 +146,6 @@ let strongEnemy = enemies.filter(strongEnem);
                             enemyBank = weakEnemy.concat(medEnemy);
                             enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
                             renderEnemy(enemySelect);
-
                         } else {
                             enemySelect = [];
                             //randomly selects an enemy from strong, medium and weak strength enemies
@@ -187,27 +175,47 @@ let strongEnemy = enemies.filter(strongEnem);
 
                     function enemySelect() {
                         // clears any previously selected enemy
-                        $enemy.forEach(enemy => enemy.classList.contains('selected-enemy') ?
-                                                    enemy.classList.remove('selected-enemy') : 
-                                                        false);
+                        // add in code to move the .target class
+                        // $enemy.forEach(enemy => enemy.classList.contains('selected-enemy') ?
+                        //                             enemy.classList.remove('selected-enemy') : 
+                        //                                 false);
+                        $enemy.forEach(enemy => {
+                            if(enemy.classList.contains('selected-enemy') || enemy.classList.contains('target')) {
+                                enemy.classList.remove('selected-enemy');
+                                enemy.classList.remove('target');
+                                console.log('hello');
+                            }
+                        });
                         
                         let index = [...$enemy].indexOf(this);
                         $enemy[index].classList.add('selected-enemy');
+                        $enemy[index].classList.add('target');
 
-                        $attackTarget = $enemyCont.querySelector('.selected-enemy');
+                        $attackTarget = $enemyCont.querySelector('.target');
                         let health = $attackTarget.dataset.hp;
                         console.log($attackTarget, health);
 
                         $attackBtn.addEventListener('click', () => {
-                            // console.log($attackTarget);
+                            if($attackTarget === undefined) return false;
+ 
+                            $attackTarget.classList.remove('selected-enemy');
+                            $attackTarget.classList.remove('target');
+
+
 
                             $attackTarget.setAttribute('data-hp', health - 10);
+                            health = $attackTarget.dataset.hp;
+                            $attackTarget = undefined;
                             if (health <= 0) {
+                                // $attackTarget = $enemyCont.querySelector('.selected-enemy');
                                 console.log(`${$attackTarget.dataset.name} has been defeated!!!!!!`);
-                                $attackTarget.parentNode.removeChild($attackTarget);
+                                $attackTarget.parentNode.removeChild(this);
+                                $attackTarget = undefined;
                                 console.log($attackTarget);
                                 // add experience to charStats exp
-                            }                                
+                                console.log('exp added');
+
+                            }                              
                         });
                     }
 
