@@ -114,8 +114,8 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                     // ////////// generates random number of enemies and renders them to the DOM
                     function enemyGen() {
                         // gen random number of enemies
-                        // let numEnemies = randomNum(1, 3);
-                        let numEnemies = 2;
+                        let numEnemies = randomNum(1, 3);
+                        // let numEnemies = 2;
                         // pushes enemy container elements to DOM
                         let enemyBank = []; // will have a list of enemies to randomly select from
                         let enemySelect = []; // the randomly selected enemies go here
@@ -136,7 +136,7 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                             //randomly selects an enemy from strong, medium and weak strength enemies
                             enemyBank = weakEnemy.concat(medEnemy.concat(strongEnemy)); 
                             enemySelect.push(enemyBank[randomNum(1, enemyBank.length-1)]);
-                            renderEnemy(enemySelect);
+                        renderEnemy(enemySelect);
                         } else if (numEnemies === 2) {
                             enemySelect = [];
                             //randomly selects an enemy from strong and weak strength enemies
@@ -169,56 +169,52 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                             enemy.setAttribute('data-name', array[index].name);
                             enemy.setAttribute('data-HP', array[index].HP);
                         });
-
                         $enemy.forEach(enemy => enemy.addEventListener('click', enemySelect));
                     }
 
                     function enemySelect() {
                         // clears any previously selected enemy
-                        // add in code to move the .target class
-                        // $enemy.forEach(enemy => enemy.classList.contains('selected-enemy') ?
-                        //                             enemy.classList.remove('selected-enemy') : 
-                        //                                 false);
                         $enemy.forEach(enemy => {
                             if(enemy.classList.contains('selected-enemy') || enemy.classList.contains('target')) {
                                 enemy.classList.remove('selected-enemy');
                                 enemy.classList.remove('target');
-                                console.log('hello');
+                                // console.log('hello');
                             }
-                        });
-                        
+                        });                        
                         let index = [...$enemy].indexOf(this);
                         $enemy[index].classList.add('selected-enemy');
                         $enemy[index].classList.add('target');
-
-                        $attackTarget = $enemyCont.querySelector('.target');
-                        let health = $attackTarget.dataset.hp;
-                        console.log($attackTarget, health);
+                        let $attackTarget = $enemyCont.querySelector('.target');
+                        // let $attackTargetDead = $attackTarget;
+                        // let health = $attackTarget.dataset.hp;
+                        console.log($attackTarget.dataset.name, $attackTarget.dataset.hp);
 
                         $attackBtn.addEventListener('click', () => {
                             if($attackTarget === undefined) return false;
- 
+                            let health = $attackTarget.dataset.hp;
+                            let $attackTargetDead = $attackTarget;
+
                             $attackTarget.classList.remove('selected-enemy');
                             $attackTarget.classList.remove('target');
-
-
 
                             $attackTarget.setAttribute('data-hp', health - 10);
                             health = $attackTarget.dataset.hp;
                             $attackTarget = undefined;
                             if (health <= 0) {
-                                // $attackTarget = $enemyCont.querySelector('.selected-enemy');
-                                console.log(`${$attackTarget.dataset.name} has been defeated!!!!!!`);
-                                $attackTarget.parentNode.removeChild(this);
-                                $attackTarget = undefined;
-                                console.log($attackTarget);
+                                console.log(`${$attackTargetDead.dataset.name} has been defeated!!!!!!`);
+                                $attackTargetDead.parentNode.removeChild(this);
+                                
+                                console.log($attackTargetDead);
                                 // add experience to charStats exp
                                 console.log('exp added');
-
                             }                              
+                            $attackTargetDead = undefined;
                         });
                     }
 
+
+
                 //  NOTES 
-                //  WORK ON ATTACK BTN FUNCTION. works fine for fighting the first enemy, but after that it runs the if statement
-                    // even if that enemy still has health.
+                    // click enemy > click attack btn = works fine
+                    // click enemy > click another enemy = damages both enemies! :/
+                    // Need to sort this out
