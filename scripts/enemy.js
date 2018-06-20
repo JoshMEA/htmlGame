@@ -88,7 +88,8 @@ var shittyGoblin = new Enemy ('Shitty Goblin', 60, 0, 30, 10, 15, 5, 5, 5);
                     let apVal = target.armVal - weapon.AP;
                     let dmg = Math.floor((atkPow - defPow) / apVal) + weapon.AP;
                     critHit ? dmg = dmg*2 : false;
-                    target.HP = target.HP - dmg;
+                    // target.HP = target.HP - dmg;
+                    target.HP -= dmg;
                     console.log(dmg);
                 
                     if(target.HP <= 0) { // when enemy is defeated
@@ -129,7 +130,7 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                         // set class for all enemies
                         $enemy = $fightCont.querySelectorAll('article');
                         // 
-                        $enemy.forEach(enemy =>enemy.classList.add('enemy'));
+                        $enemy.forEach(enemy => enemy.classList.add('enemy'));
                         // find what enemies will appear
                         if (numEnemies === 1) {
                             enemySelect = [];
@@ -185,30 +186,25 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                         $enemy[index].classList.add('selected-enemy');
                         $enemy[index].classList.add('target');
                         let $attackTarget = $enemyCont.querySelector('.target');
-                        // let $attackTargetDead = $attackTarget;
-                        // let health = $attackTarget.dataset.hp;
-                        console.log($attackTarget.dataset.name, $attackTarget.dataset.hp);
+                        // console.log($attackTarget.dataset.name, $attackTarget.dataset.hp);
 
                         $attackBtn.addEventListener('click', () => {
                             if($attackTarget === undefined) return false;
                             let health = $attackTarget.dataset.hp;
-                            let $attackTargetDead = $attackTarget;
 
                             $attackTarget.classList.remove('selected-enemy');
                             $attackTarget.classList.remove('target');
 
                             $attackTarget.setAttribute('data-hp', health - 10);
                             health = $attackTarget.dataset.hp;
-                            $attackTarget = undefined;
                             if (health <= 0) {
-                                console.log(`${$attackTargetDead.dataset.name} has been defeated!!!!!!`);
-                                $attackTargetDead.parentNode.removeChild(this);
+                                console.log(`${$attackTarget.dataset.name} has been defeated!!!!!!`);
+                                $attackTarget.parentNode.removeChild(this);
                                 
-                                console.log($attackTargetDead);
                                 // add experience to charStats exp
                                 console.log('exp added');
-                            }                              
-                            $attackTargetDead = undefined;
+                            }
+                            $attackTarget = undefined;
                         });
                     }
 
