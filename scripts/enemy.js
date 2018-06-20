@@ -23,6 +23,7 @@ let Enemy = function(name, maxHP, maxMP, armVal, attack, defense, magicPower, ma
     this.magicDefense = magicDefense + Math.floor(magicDefense * (this.level * 0.05));
     this.speed = speed + Math.floor(speed * (this.level * 0.05));
     this.exp =  Math.floor((randomNum(1, this.level + 10)) + (this.level / ((this.level / (this.maxHP * 6 )) * 2)));
+    enemies.push(this);
 };
 
 
@@ -99,7 +100,8 @@ var shittyGoblin = new Enemy ('Shitty Goblin', 60, 0, 30, 10, 15, 5, 5, 5);
             }
 
 
-let enemies = [randomGoblin, otherGoblin, goblinOverlord, shittyGoblin, goblin, niceGoblin];
+// let enemies = [randomGoblin, otherGoblin, goblinOverlord, shittyGoblin, goblin, niceGoblin];
+let enemies = [];
 
 const $fightCont = document.querySelector('.fight-cont');
 const $enemyCont = $fightCont.querySelector('.enemy-cont');

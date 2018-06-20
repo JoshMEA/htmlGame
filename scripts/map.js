@@ -5,40 +5,56 @@ const $scene = $gameScreen.querySelector('.scene');
 const $backgroundImg = $gameScreen.querySelector('.scene-img');
 let $objects;
 let currentScene = 0;
-const scenes = [
-    {
-        imgSrc : 'images/image.jpg', // scene picture
-        objects : [    // array of all interactable objects in that scene
-            {   props : { // absolute positioning properties
-                    startX : 396,   //topLeft xCoord
-                    startY : 176,   // topLeft yCoord
-                    width : 178,    // width
-                    height : 80 },  // height
-                type : 'enemy',// object type (person, enemy, container, waypoint etc.)
-                name : 'table'
-            },
-            {   props : {
-                    startX : 687,
-                    startY : 181,
-                    width : 104,
-                    height : 90 },            
-                type : 'container',
-                name : 'chair'
-            },
-            {   props : {
-                startX : 370,
-                startY : 30,
-                width : 285,
-                height : 100 },            
-            type : 'container',
-            name : 'lounge'
-            }
-        ],
-        enemies : [/* goblin, goblinOverlord, otherGoblin */]// array of enemies, each one is defined elsewhere
-    },
-    {},
-    {}
-];
+let scenes = [];
+let objects = [];
+
+/* SCENE CONSTRUCTOR FUNCTION */
+    // imgSrc is a string for the file path of the image for the scene
+    // objects is an array of interactable objects for the scene
+    // enemies is an array of enemies used in the scene
+let Scene = function(sceneNum, name, objects, enemies) {
+    this.name = name;
+    this.sceneNum = sceneNum;
+    this.imgSrc = `images/scene${sceneNum}.jpg`;
+    this.objects = objects;
+    this.enemies = enemies;
+    scenes.push(this);
+}
+
+/* OBJECT CONSTRUCTOR FUNCTION */
+// startX, startY, width, height value type is int
+// type and name must be strings
+// type must be set to person, enemy, container, waypoint etc.
+// Scene number set to int 
+let Object = function(sceneNum,startX, startY, width, height, type, name) {
+    let props = function(startX, startY, width, height) {
+        this.startX = startX;
+        this.startY = startY;
+        this.width = width;
+        this.height = height;
+    }
+    this.sceneNum = sceneNum;
+    this.props = new props(startX, startY, width, height);
+    this.type = type;
+    this.name = name;
+    objects.push(this);
+}
+
+// DEFINING OBJECTS
+let table = new Object(1, 396, 176, 178, 80, '', 'table');
+let chair = new Object(1, 687, 181, 104, 90, '', 'chair');
+let lounge = new Object(1, 370, 30, 285, 100, '', 'lounge');
+
+let testObject = new Object(2, 370, 30, 285, 100, '', 'lounge');
+let testObject2 = new Object(3, 370, 30, 285, 100, '', 'lounge');
+
+// DEFINING SCENE SPECIFIC OBJECTS
+let scene1Obj = objects.filter(x => x.sceneNum === 1);
+let scene2Obj = objects.filter(x => x.sceneNum === 2);
+let scene3Obj = objects.filter(x => x.sceneNum === 3);
+
+// DEFINING A SCENE
+const scene1 = new Scene(1, 'Opening Scene', scene1Obj, undefined);
 
 window.addEventListener('load', () => {
     $backgroundImg.src = scenes[currentScene].imgSrc;
