@@ -118,7 +118,6 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                     function enemyGen() {
                         // gen random number of enemies
                         let numEnemies = randomNum(1, 3);
-                        // let numEnemies = 2;
                         // pushes enemy container elements to DOM
                         let enemyBank = []; // will have a list of enemies to randomly select from
                         let enemySelect = []; // the randomly selected enemies go here
