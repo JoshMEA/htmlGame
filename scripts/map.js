@@ -57,7 +57,7 @@ window.addEventListener('load', () => {
     // $backgroundImg.style.backgroundImage = `url(${scenes[currentScene].imgSrc})`;
 });
 
-// pushes interactable objects to DOM
+// renders interactable objects to DOM
 scenes[currentScene].objects.forEach(obj => {
     let index = [...scenes[currentScene].objects].indexOf(obj);
     let node = document.createElement('article');
