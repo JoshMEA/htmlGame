@@ -64,7 +64,6 @@ scenes[currentScene].objects.forEach(obj => {
     
     $scene.appendChild(node);
     $objects = $scene.querySelectorAll('article'); // sets variable for all interactable elements
-    console.log(obj);
     $objects[index].classList.add('object'); // applies css class to object
     $objects[index].setAttribute('data-type', scenes[currentScene].objects[index].type); //sets object type
     $objects[index].setAttribute('data-name', scenes[currentScene].objects[index].name); //sets object name

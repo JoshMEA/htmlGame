@@ -23,7 +23,7 @@ let Enemy = function(name, maxHP, maxMP, armVal, attack, defense, magicPower, ma
     this.magicDefense = magicDefense + Math.floor(magicDefense * (this.level * 0.05));
     this.speed = speed + Math.floor(speed * (this.level * 0.05));
     this.exp =  Math.floor((randomNum(1, this.level + 10)) + (this.level / ((this.level / (this.maxHP * 6 )) * 2)));
-    enemies.push(this);
+    // enemies.push(this);
 };
 
 
@@ -100,8 +100,8 @@ var shittyGoblin = new Enemy ('Shitty Goblin', 60, 0, 30, 10, 15, 5, 5, 5);
             }
 
 
-// let enemies = [randomGoblin, otherGoblin, goblinOverlord, shittyGoblin, goblin, niceGoblin];
-let enemies = [];
+let enemies = [randomGoblin, otherGoblin, goblinOverlord, shittyGoblin, goblin, niceGoblin];
+// let enemies = [];
 
 const $fightCont = document.querySelector('.fight-cont');
 const $enemyCont = $fightCont.querySelector('.enemy-cont');
@@ -162,7 +162,7 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                     }
 
                     // Puts the enemy info into the DOM
-                    //target refers to $enemy, enemySelect
+                    // target refers to $enemy, enemySelect
                     function renderEnemy(array = enemySelect) {
                         var $enemy = $fightCont.querySelectorAll('article');
 
@@ -170,6 +170,7 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                             let index = [...$enemy].indexOf(enemy);
                             enemy.setAttribute('data-name', array[index].name);
                             enemy.setAttribute('data-HP', array[index].HP);
+                            enemy.setAttribute('data-exp', array[index].exp);
                         });
                         $enemy.forEach(enemy => enemy.addEventListener('click', enemySelect));
                     }
@@ -203,7 +204,9 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                                 $attackTarget.parentNode.removeChild(this);
                                 
                                 // add experience to charStats exp
-                                console.log('exp added');
+                                let exp = $attackTarget.dataset.exp;
+                                charStats.currentExp = charStats.currentExp + exp;
+                                console.log(charStats.currentExp);
                             }
                             $attackTarget = undefined;
                         });

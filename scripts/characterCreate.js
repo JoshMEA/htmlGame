@@ -15,12 +15,12 @@ let charStats = {
     level : 1,
     expNeeded : 100,
     currentExp : 0,
-    skillPoints : 0,
+    skillPoints : 10,
     name : '',
     maxHP : 100,
-    HP : maxHP,
+    HP : this.maxHP,
     maxMP : 100,
-    MP : maxMP,
+    MP : this.maxMP,
     armVal : 0,
     attack : 0,
     defense : 0,
@@ -56,10 +56,10 @@ function addAttribute() {
     const index = [...$addBtn].indexOf(this);
     const currentAttribute = $attrName[index].dataset.attrname; // gets the attribute that is being added to
 
-    if (charStats['skillPoints'] > 0) { // if player has skill points
+    if (charStats.skillPoints > 0) { // if player has skill points
         charStats[currentAttribute]++; // + 1 to that attribute in the charStats object
-        charStats['skillPoints']--; // -1 from the skill point bank in charStats object
-        $skillPoints.textContent = charStats['skillPoints']; // updates the amount of skill points available in the DOM
+        charStats.skillPoints--; // -1 from the skill point bank in charStats object
+        $skillPoints.textContent = charStats.skillPoints; // updates the amount of skill points available in the DOM
         const currentAttributeVal = charStats[currentAttribute]; //gets the current attributes value
         $attrVal[index].textContent = currentAttributeVal; // updates the amount of points for that attribute in the DOM
         console.log(currentAttribute, charStats[currentAttribute]);
@@ -72,13 +72,13 @@ function subAttribute() {
 
     if (charStats[currentAttribute] <= 0) {
             return false;
-        } else {
-            charStats[currentAttribute]--; // + 1 to that attribute in the charStats object
-            charStats['skillPoints']++; // +1 to the skill point bank in charStats object
-            $skillPoints.textContent = charStats['skillPoints']; // updates the amount of skill points available in the DOM
-            const currentAttributeVal = charStats[currentAttribute]; //gets the current attributes value
-            $attrVal[index].textContent = currentAttributeVal; // updates the amount of points for that attribute in the DOM
-        }
+    } else {
+        charStats[currentAttribute]--; // + 1 to that attribute in the charStats object
+        charStats.skillPoints++; // +1 to the skill point bank in charStats object
+        $skillPoints.textContent = charStats['skillPoints']; // updates the amount of skill points available in the DOM
+        const currentAttributeVal = charStats[currentAttribute]; //gets the current attributes value
+        $attrVal[index].textContent = currentAttributeVal; // updates the amount of points for that attribute in the DOM
+    }
 }
 
 $createBtn.addEventListener('click', () => {
@@ -88,10 +88,12 @@ $createBtn.addEventListener('click', () => {
         return false;
     } else {
         charStats['name'] = nameInput.value;
+        console.log('Character created');
     }
 });
 
 // Notes
     // this creation screen doubles as the level up screen. When it has been used to create the character in the beginning,
     // the text in $createBtn will change to 'Done' and the name input field will disappear
+    // Name input field will disappear and Name h1 will be changed to character's name
     // all functionality with adding and subtracting from the attributes will remain the same 
