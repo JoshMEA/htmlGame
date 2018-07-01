@@ -25,14 +25,14 @@ for (const box of boxes) {
 function dragStart() {
     active = this;
     lastBox = this.parentNode;
-    this.classList.add('hold');
+    // this.classList.add('hold');
     setTimeout(() => this.classList.add('invis'), 0);
 }
 
 function dragEnd() {
     console.log('end');
     this.classList.remove('invis');
-    this.classList.remove('hold');
+    // this.classList.remove('hold');
 }
 
 

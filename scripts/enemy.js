@@ -181,7 +181,6 @@ const strongEnemy = enemies.filter(enemy => enemy.HP > 65);
                             if(enemy.classList.contains('selected-enemy') || enemy.classList.contains('target')) {
                                 enemy.classList.remove('selected-enemy');
                                 enemy.classList.remove('target');
-                                // console.log('hello');
                             }
                         });                        
                         let index = [...$enemy].indexOf(this);

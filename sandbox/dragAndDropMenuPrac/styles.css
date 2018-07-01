@@ -35,6 +35,7 @@
     width: 70px;
     margin: auto;
     border: 1px solid black;
+    transition: all 0.3s;
 }
 
 .hold {
@@ -43,6 +44,7 @@
 
 .hovered {
     border: 4px solid grey;
+    transform: scale(1.2);
 }
 
 .invis {
